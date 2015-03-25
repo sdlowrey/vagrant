@@ -1,0 +1,8 @@
+---
+- hosts: default
+  tasks:
+  - name: add EPEL yum repo
+    yum: pkg=epel-release state=latest
+    
+  - name: install ansible
+    yum: pkg=ansible state=latest
