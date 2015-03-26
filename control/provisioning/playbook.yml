@@ -1,8 +1,14 @@
 ---
-- hosts: default
+- hosts: default  
   tasks:
   - name: add EPEL yum repo
-    yum: pkg=epel-release state=latest
+    yum: pkg=epel-release
     
   - name: install ansible
-    yum: pkg=ansible state=latest
+    yum: pkg=ansible
+
+  - name: install git
+    yum: pkg=git
+
+  - name: copy controller files
+    copy: src=ansible dest=/home/vagrant

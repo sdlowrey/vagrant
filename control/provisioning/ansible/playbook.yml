@@ -1,0 +1,8 @@
+---
+- hosts: em7
+  tasks:
+  - name: add EPEL repo
+    yum: pkg=epel-release state=latest
+
+  - name: disable shell timeout
+    replace: dest=/root/.bash_profile regexp='TMOUT=300' replace='TMOUT=0'
