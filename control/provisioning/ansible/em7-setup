@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# Initialize Ansible communication on EM7 hosts.
+# This has to be done before ansible-playbook can be used.
+
+usage () {
+    echo "usage: $(basename $0) HOST"
+    echo ""
+    echo "Set HOST up for ansible control via key-based SSH access"
+    exit 1
+}
+
+[[ $# == 1 ]] || usage
+HOST=$1
+
+INVENTORY=./hosts
+SSH_KEY=$(cat /home/vagrant/.ssh/id_rsa.pub)
+ANSIBLE="ansible $HOST -i $INVENTORY -u root"
+
+# note: you may have to disable host_key_checking in ansible.cfg
+export ANSIBLE_HOST_KEY_CHECKING=False
+$ANSIBLE -k -m authorized_key -a "user=root key=\"$SSH_KEY\""
+
+# this package is needed for ansible responses on CentOS 5
+$ANSIBLE -m raw -a "yum install -y python-simplejson"
+

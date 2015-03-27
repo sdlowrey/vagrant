@@ -1,25 +1,6 @@
 ---
 - hosts: default  
-  tasks:
-  - name: add EPEL yum repo
-    yum: pkg=epel-release
+  roles:
+    - controller
     
-  - name: install ansible
-    yum: pkg=ansible
-
-  - name: install git
-    yum: pkg=git
-    
-  - name: copy ansible playbook
-    copy: src=ansible/playbook.yml dest=/home/vagrant owner=vagrant
-
-  - name: copy ansible inventory
-    copy: src=ansible/hosts dest=/etc/ansible backup=yes
-
-  - name: create ansible SSH key
-    command: /usr/bin/ssh-keygen -N '' -f /home/vagrant/.ssh/id_rsa creates=/home/vagrant/.ssh/id_rsa
-    sudo: yes
-    sudo_user: vagrant
-
-
     

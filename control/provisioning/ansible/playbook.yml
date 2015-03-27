@@ -1,11 +1,7 @@
 ---
 - hosts: em7
   remote_user: root
-  gather_facts: no
-  tasks:
+  roles:
 
-  - name: add EPEL repo
-    yum: pkg=epel-release state=latest
-
-  - name: disable shell timeout
-    replace: dest=/root/.bash_profile regexp='TMOUT=300' replace='TMOUT=0'
+    - controlled
+    - em7-dev

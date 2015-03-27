@@ -1,0 +1,3 @@
+---
+- name: disable shell timeout
+  replace: dest=/root/.bash_profile regexp='TMOUT=300' replace='TMOUT=0'

@@ -1,0 +1,22 @@
+---
+- name: add EPEL yum repo
+  yum: pkg=epel-release
+
+- name: install ansible
+  yum: pkg=ansible
+
+- name: install sshpass for EM7 setup support
+  yum: pkg=sshpass
+  
+- name: copy ansible playbook and support files
+  copy: src=ansible dest=/home/vagrant owner=vagrant
+
+- name: make scripts executable
+  file: path=ansible/em7-setup mode=0755
+  
+- name: create ansible SSH key
+  command: /usr/bin/ssh-keygen -N '' -f /home/vagrant/.ssh/id_rsa creates=/home/vagrant/.ssh/id_rsa
+  sudo: yes
+  sudo_user: vagrant
+
+
