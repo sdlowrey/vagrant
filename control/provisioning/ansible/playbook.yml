@@ -1,6 +1,9 @@
 ---
 - hosts: em7
+  remote_user: root
+  gather_facts: no
   tasks:
+
   - name: add EPEL repo
     yum: pkg=epel-release state=latest
 
