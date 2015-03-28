@@ -7,6 +7,7 @@ usage () {
     echo "usage: $(basename $0) HOST"
     echo ""
     echo "Set HOST up for ansible control via key-based SSH access"
+    echo -e "\nHOST should be a host or group name from the Ansible inventory."
     exit 1
 }
 
@@ -16,17 +17,21 @@ HOST=$1
 INVENTORY=./hosts
 SSH_KEY=$(cat /home/vagrant/.ssh/id_rsa.pub)
 ANSIBLE="ansible $HOST -i $INVENTORY -u root"
+ASK_PASS=-k
 
 # For this session, disable checking of keys in known_hosts
 export ANSIBLE_HOST_KEY_CHECKING=False
 
-# python-simplejson is needed for ansible responses on CentOS 5
-# The user has to enter the root password to get things going
-echo -e "\nEnter the root password for host(s) \"$HOST\""
-$ANSIBLE -k -m raw -a "yum install -y python-simplejson"
+if [ $HOST = "em7" ]; then
+    # python-simplejson is needed for ansible responses on CentOS 5
+    # The user has to enter the root password to get things going
+    $ANSIBLE $ASK_PASS -m raw -a "yum install -y python-simplejson"
 
-# Now install the SSH key on the remotes
-$ANSIBLE -m authorized_key -a "user=root key=\"$SSH_KEY\""
+    # Disable password prompt for next operation
+    ASK_PASS=
+fi
+
+# Now install the SSH key on the remotes.
+$ANSIBLE $ASK_PASS -m authorized_key -a "user=root key=\"$SSH_KEY\""
 
 echo "Done."
-echo "You can verify with \"ansible -u root -i hosts all -m ping\"\n"
