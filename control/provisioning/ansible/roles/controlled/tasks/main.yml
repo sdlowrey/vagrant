@@ -1,4 +1,0 @@
----
-  - name: install python-simplejson for older systems
-    raw: yum -y install python-simplejson
-
