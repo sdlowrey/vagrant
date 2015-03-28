@@ -4,3 +4,11 @@
   roles:
 
     - em7-dev
+
+- hosts: vcsim
+  vars:
+    sim_config: default
+  remote_user: root
+
+  roles:
+    - vcsim
