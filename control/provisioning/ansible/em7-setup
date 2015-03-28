@@ -17,10 +17,16 @@ INVENTORY=./hosts
 SSH_KEY=$(cat /home/vagrant/.ssh/id_rsa.pub)
 ANSIBLE="ansible $HOST -i $INVENTORY -u root"
 
-# note: you may have to disable host_key_checking in ansible.cfg
+# For this session, disable checking of keys in known_hosts
 export ANSIBLE_HOST_KEY_CHECKING=False
-$ANSIBLE -k -m authorized_key -a "user=root key=\"$SSH_KEY\""
 
-# this package is needed for ansible responses on CentOS 5
-$ANSIBLE -m raw -a "yum install -y python-simplejson"
+# python-simplejson is needed for ansible responses on CentOS 5
+# The user has to enter the root password to get things going
+echo -e "\nEnter the root password for host(s) \"$HOST\""
+$ANSIBLE -k -m raw -a "yum install -y python-simplejson"
 
+# Now install the SSH key on the remotes
+$ANSIBLE -m authorized_key -a "user=root key=\"$SSH_KEY\""
+
+echo "Done."
+echo "You can verify with \"ansible -u root -i hosts all -m ping\"\n"
