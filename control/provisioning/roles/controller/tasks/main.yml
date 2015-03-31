@@ -19,4 +19,18 @@
   sudo: yes
   sudo_user: vagrant
 
+- name: install mtools for auto-deploy
+  yum: pkg=mtools
+
+- name: install fabric for auto-deploy
+  yum: pkg=fabric
+
+- name: install python-requests for vCenter auto-deploy
+  yum: pkg=python-requests
+
+- name: install pip for pysphere install
+  yum: pkg=python-pip
+
+- name: install pysphere for vCenter auto-deploy
+  pip: name=pysphere
 
