@@ -34,3 +34,5 @@
 - name: install pysphere for vCenter auto-deploy
   pip: name=pysphere
 
+- name: place automated deployment code
+  unarchive: src=/vagrant/automated_deployment.tgz dest=/home/vagrant owner=vagrant group=vagrant copy=no
