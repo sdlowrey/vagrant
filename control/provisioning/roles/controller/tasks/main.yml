@@ -8,11 +8,18 @@
 - name: install sshpass for EM7 setup support
   yum: pkg=sshpass
   
-- name: copy ansible playbook and support files
-  copy: src=ansible dest=/home/vagrant owner=vagrant
+- name: install ansible setup tool for EM7 and VCSIM
+  copy: src=ansible/ansible-setup dest=/usr/local/bin mode=0755 owner=root group=root
+  sudo: yes
+  sudo_user: root
 
-- name: make scripts executable
-  file: path=ansible/em7-setup mode=0755
+- name: install ansible inventory file
+  copy: src=ansible/hosts dest=/etc/ansible mode=0644 owner=root group=root backup=yes
+  sudo: yes
+  sudo_user: root
+
+- name: install ansible playbooks
+  copy: src=ansible/playbooks dest=/home/vagrant owner=vagrant
   
 - name: create ansible SSH key
   command: /usr/bin/ssh-keygen -N '' -f /home/vagrant/.ssh/id_rsa creates=/home/vagrant/.ssh/id_rsa

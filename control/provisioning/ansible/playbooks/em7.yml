@@ -1,0 +1,7 @@
+---
+- hosts: em7
+  remote_user: root
+  roles:
+
+    - em7-dev
+

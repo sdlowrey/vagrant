@@ -1,0 +1,11 @@
+---
+- hosts: vcsim
+  remote_user: root
+
+  vars:
+    sim_tiny: custom:host=1,vm=10,vm_on=10
+    sim_100vm: custom:dc=1,cluster=1,host=5,rp=5,vm=100,vm_on=75
+    sim_config: "{{ sim_100vm }}"
+
+  roles:
+    - vcsim

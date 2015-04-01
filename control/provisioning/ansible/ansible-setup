@@ -16,7 +16,7 @@ HOST=$1
 
 INVENTORY=./hosts
 SSH_KEY=$(cat /home/vagrant/.ssh/id_rsa.pub)
-ANSIBLE="ansible $HOST -i $INVENTORY -u root"
+ANSIBLE="ansible $HOST -u root"
 ASK_PASS=-k
 
 # For this session, disable checking of keys in known_hosts

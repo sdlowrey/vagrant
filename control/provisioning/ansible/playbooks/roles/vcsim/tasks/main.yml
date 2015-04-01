@@ -1,9 +1,6 @@
 ---
 # Tasks for vCenter Simulator (VCSIM) role
 
-- name: install simulator config files
-  copy: src=model/ dest=/etc/vmware-vpx/vcsim/model
-
 - name: stop and clear VC simulator
   command: vmware-vcsim-stop true
 
