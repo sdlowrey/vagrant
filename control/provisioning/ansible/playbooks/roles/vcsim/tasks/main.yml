@@ -1,8 +1,0 @@
----
-# Tasks for vCenter Simulator (VCSIM) role
-
-- name: stop and clear VC simulator
-  command: vmware-vcsim-stop true
-
-- name: start VC simulator
-  command: vmware-vcsim-start {{ sim_config }}
