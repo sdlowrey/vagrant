@@ -1,0 +1,11 @@
+---
+- name: 'install carbon'
+  yum: name={{ item }} state=present
+  with_items:
+    - python-carbon
+
+- name: 'configure carbon cache'
+  copy: src=carbon dest=/etc/ backup=yes
+
+- name: 'enable and start carbon-cache service'
+  service: name=carbon-cache enabled=true state=started
