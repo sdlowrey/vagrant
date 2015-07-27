@@ -1,0 +1,7 @@
+---
+- hosts: default  
+  roles:
+    - c7base
+    - nginx
+    - graphite 
+    - carbon-cache
