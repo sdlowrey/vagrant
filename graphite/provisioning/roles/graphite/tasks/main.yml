@@ -16,10 +16,10 @@
     - uwsgi-plugin-python
 
 - name: 'clone github graphite-web repo'
-  git: repo=https://github.com/graphite-project/graphite-web.git dest=/home/vagrant/graphite
+  git: repo=https://github.com/graphite-project/graphite-web.git dest={{ ansible_env.HOME }}/graphite
 
 - name: 'install graphite webapp'
-  command: python setup.py install chdir=graphite 
+  command: python setup.py install chdir=graphite
 
 - name: 'create graphite group'
   group: name=graphite state=present

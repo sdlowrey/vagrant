@@ -1,8 +1,8 @@
 ---
-- hosts: default  
+- hosts: default
   roles:
     - c7base
     - nginx
-    - graphite 
+    - graphite
     - carbon-cache
     - grafana
