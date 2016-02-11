@@ -1,6 +1,6 @@
 ---
 - name: 'install grafana'
-  yum: name="https://grafanarel.s3.amazonaws.com/builds/grafana-2.0.2-1.x86_64.rpm"
+  yum: name="https://grafanarel.s3.amazonaws.com/builds/grafana-2.6.0-1.x86_64.rpm"
 
 - name: 'enable and start grafana-server'
   service: name=grafana-server enabled=yes state=started
