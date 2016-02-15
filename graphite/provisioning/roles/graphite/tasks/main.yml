@@ -14,24 +14,30 @@
     - pytz
     - uwsgi
     - uwsgi-plugin-python
+  become: yes
 
 - name: 'clone github graphite-web repo'
   git: repo=https://github.com/graphite-project/graphite-web.git dest={{ ansible_env.HOME }}/graphite
 
 - name: 'install graphite webapp'
   command: python setup.py install chdir=graphite
+  become: yes
 
 - name: 'create graphite group'
   group: name=graphite state=present
+  become: yes
 
 - name: 'create graphite user'
   user: name=graphite group=graphite
+  become: yes
 
 - name: 'change app dir owner'
   file: path=/opt/graphite owner=graphite group=graphite state=directory recurse=yes
+  become: yes
 
 - name: 'configure webapp local settings'
   copy: src=local_settings.py dest=/opt/graphite/webapp/graphite owner=graphite group=graphite
+  become: yes
 
 # ansible django_manage module not compatible
 - name: 'initialize webapp (django) db'
@@ -41,15 +47,24 @@
 
 - name: 'configure uwsgi to serve graphite'
   copy: src=graphite.ini dest=/etc/uwsgi.d
+  become: yes
 
 - name: 'set uwsgi file ownership'
   file: path=/etc/uwsgi.d/graphite.ini owner=graphite group=graphite
+  become: yes
 
 - name: 'enable and start uwsgi service'
   service: name=uwsgi enabled=yes state=restarted
+  become: yes
 
 - name: 'add graphite site to nginx conf'
   copy: src=graphite.conf dest=/etc/nginx/conf.d
+  become: yes
+
+- name: 'allow nginx to connect to uwsgi in selinux environment'
+  seboolean: name=httpd_can_network_connect state=yes persistent=yes
+  become: yes
 
 - name: 'reload nginx service'
   service: name=nginx state=restarted
+  become: yes

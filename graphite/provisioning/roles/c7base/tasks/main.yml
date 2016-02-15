@@ -1,12 +1,15 @@
 ---
 - name: 'update all packages'
   yum: name=* state=latest
+  become: yes
 
 - name: 'install EPEL repo'
   yum: name=epel-release state=present
+  become: yes
 
 - name: 'install generic tools and conveniences'
   yum: name={{ item }} state=present
   with_items:
     - nmap-ncat
     - vim
+  become: yes
