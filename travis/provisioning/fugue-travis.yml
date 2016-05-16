@@ -1,0 +1,17 @@
+---
+- hosts: all
+  tasks:
+  - name: update apt cache
+    apt: update_cache=yes
+
+  - name: install curl
+    apt: name=curl state=present
+
+  - name: install git
+    apt: name=git state=present
+
+  - name: write git config
+    template: src=gitconfig dest=/home/vagrant/.gitconfig
+
+  - name: install vim
+    apt: name=vim state=present
