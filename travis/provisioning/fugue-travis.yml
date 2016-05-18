@@ -13,5 +13,17 @@
   - name: write git config
     template: src=gitconfig dest=/home/vagrant/.gitconfig
 
+  - name: install make (for fpm)
+    apt: name=make state=present
+
+  - name: install ruby-dev (for fpm)
+    apt: name=ruby-dev state=present
+    
+  - name: install fpm
+    gem: name=fpm state=present
+
   - name: install vim
     apt: name=vim state=present
+
+  - name: install fugue client builder
+    template: src=build-client.sh dest=/home/vagrant/build mode=0755
